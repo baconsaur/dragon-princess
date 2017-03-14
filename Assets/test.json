@@ -1,0 +1,13 @@
+{
+    "dialogueNodes": [
+        {
+            "text": "This is text"
+        },
+        {
+            "text": "Even more text"
+        },
+        {
+            "text": "So much text"
+        }
+    ]
+}

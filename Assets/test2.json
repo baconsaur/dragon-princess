@@ -1,0 +1,14 @@
+{
+    "dialogueNodes": [
+        {
+            "id": 0,
+            "text": "Go away.",
+            "actions": [
+                {
+                    "text": "Okay, bye!",
+                    "nextNode": -1
+                }
+            ]
+        }
+    ]
+}

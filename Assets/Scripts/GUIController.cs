@@ -7,17 +7,16 @@ public class GUIController : MonoBehaviour {
 	public GameObject dialoguePrefab;
 	public GameObject responsePrefab;
 
+	private DialogueManager dialogueManager;
 	private List<GameObject> visibleText;
 	private bool active;
-	private DialogueNode[] currentDialogue;
-	private int dialogueIndex;
-	private int responseIndex;
 	private float cooldown;
-	private string activeText;
+	private string fullDialogue;
 
 	void Start() {
 		active = false;
 		visibleText = new List<GameObject>();
+		dialogueManager = new DialogueManager();
 	}
 
 	void Update() {
@@ -34,9 +33,8 @@ public class GUIController : MonoBehaviour {
 	public bool isActive() { return active; }
 
 	public void StartDialogue(DialogueNode[] dialogue) {
-		currentDialogue = dialogue;
-		dialogueIndex = 0;
-		responseIndex = 0;
+		dialogueManager.SetCurrentDialogue(dialogue);
+
 		cooldown = 0.3f;
 		active = true;
 
@@ -45,14 +43,17 @@ public class GUIController : MonoBehaviour {
 
 	private void PerformAction() {
 		if (Input.GetButtonDown("Fire1")) {
+			if (fullDialogue != null) {
+				StopAllCoroutines();
+				visibleText[visibleText.Count - 1]
+					.GetComponentInChildren<Text>().text = fullDialogue;
+				fullDialogue = null;
+				return;
+			}
+			fullDialogue = null;
 			DestroyText();
 
-			Action[] actions = currentDialogue[dialogueIndex].actions;
-			if (actions.Length > 0 && actions[responseIndex].nextNode > 0) {
-				dialogueIndex = actions[responseIndex].nextNode;
-				SelectNode();
-			} else if (actions.Length == 0 && dialogueIndex < currentDialogue.Length - 1) {
-				dialogueIndex++;
+			if (dialogueManager.SetNextNode() >= 0) {
 				SelectNode();
 			} else {
 				active = false;
@@ -62,39 +63,24 @@ public class GUIController : MonoBehaviour {
 	}
 
 	private void MoveCursor() {
-		if (currentDialogue[dialogueIndex].actions.Length > 0) {
-			visibleText[responseIndex].GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
-			if (Input.GetAxis("Horizontal") > 0) {
-				responseIndex += 1;
-			} else if (Input.GetAxis("Horizontal") < 0) {
-				responseIndex -= 1;
-			} else if (Input.GetAxis("Vertical") > 0) {
-				responseIndex -= 2;
-			} else if (Input.GetAxis("Vertical") < 0) {
-				responseIndex += 2;
-			}
-
-			int max = visibleText.Count - 2 > 0 ? visibleText.Count - 2 : 0;
-
-			responseIndex = Mathf.Clamp(responseIndex, 0, max);
-
-			visibleText[responseIndex].GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
-		}
+		visibleText[dialogueManager.GetCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
+		visibleText[dialogueManager.MoveCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
 	}
 
 	private void SelectNode() {
-		responseIndex = 0;
-
-		if (currentDialogue[dialogueIndex].actions.Length > 0) {
+		if (dialogueManager.HasActions()) {
 			int i = 1;
-			foreach (var action in currentDialogue[dialogueIndex].actions) {
+			foreach (var action in dialogueManager.GetActions()) {
 				GameObject responseContainer = CreateTextContainer(responsePrefab, i);
 				responseContainer.GetComponentInChildren<Text>().text = action.text;
 				i++;
 			}
 		}
 
-		StartCoroutine(ScrollText(currentDialogue[dialogueIndex].text, CreateTextContainer(dialoguePrefab, 0)));
+		StartCoroutine(
+			ScrollText(
+				dialogueManager.GetText(),
+				CreateTextContainer(dialoguePrefab, 0)));
 
 		MoveCursor();
 	}
@@ -106,13 +92,21 @@ public class GUIController : MonoBehaviour {
 
 		if (index > 0) {
 			RectTransform dialogueTransform = dialoguePrefab.GetComponent<RectTransform>();
-			xOffset = index == 2 || index == 4 ? dialogueTransform.rect.width - rectTransform.rect.width : 0;
-			yOffset = index == 3 || index == 4 ? -rectTransform.rect.height : 0;
+			xOffset = index == 2 || index == 4
+				? dialogueTransform.rect.width - rectTransform.rect.width
+				: 0;
+			yOffset = index == 3 || index == 4
+				? -rectTransform.rect.height
+				: 0;
 			yOffset -= dialogueTransform.rect.height;
 		}
 
-		Vector3 position = new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z);
+		Vector3 position = new Vector3(
+			transform.position.x + xOffset,
+			transform.position.y + yOffset,
+			transform.position.z);
 		GameObject textContainer = Instantiate(prefab, position, Quaternion.identity);
+
 		textContainer.transform.Translate(prefab.transform.position);
 		textContainer.transform.SetParent(transform);
 
@@ -122,6 +116,7 @@ public class GUIController : MonoBehaviour {
 
 	private void DestroyText() {
 		StopAllCoroutines();
+
 		foreach (GameObject textObject in visibleText) {
 			Destroy(textObject);
 		}
@@ -130,6 +125,7 @@ public class GUIController : MonoBehaviour {
 
 	private IEnumerator ScrollText(string text, GameObject container) {
 		if (container != null) {
+			fullDialogue = text;
 			Text content = container.GetComponentInChildren<Text>();
 			for (int l = 0; l < text.Length; l += 1) {
 				content.text = content.text + text.Substring(l, 1);

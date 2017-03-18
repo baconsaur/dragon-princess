@@ -271,7 +271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 140
-  maxCooldown: 1
 --- !u!54 &301978498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -386,8 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c757f6f16e9224f57a660084da4e92f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCooldown: 1
-  GUITextPrefab: {fileID: 1506303651635736, guid: 3586e920ef1552f4a8a0a14cb446c082,
+  dialoguePrefab: {fileID: 1506303651635736, guid: 3586e920ef1552f4a8a0a14cb446c082,
+    type: 2}
+  responsePrefab: {fileID: 1546544427125754, guid: e874979d025c556409347f5af87569d2,
     type: 2}
 --- !u!114 &421027290
 MonoBehaviour:
@@ -601,6 +601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   json: {fileID: 4900000, guid: b4540dfd92716e54386c310bf73a2bde, type: 3}
+  dialogueNodes: []
 --- !u!54 &1249553637
 Rigidbody:
   m_ObjectHideFlags: 0

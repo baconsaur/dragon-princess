@@ -1,13 +1,99 @@
 {
     "dialogueNodes": [
         {
-            "text": "This is text"
+            "id": 0,
+            "text": "Hello, friend.",
+            "actions": [
+                {
+                    "text": "Hello",
+                    "nextNode": 1
+                }
+            ]
         },
         {
-            "text": "Even more text"
+            "id": 1,
+            "text": "Would you like to have a conversation?",
+            "actions": [
+                {
+                    "text": "Yes!",
+                    "nextNode": 3
+                },
+                {
+                    "text": "No, thanks",
+                    "nextNode": 2
+                }
+            ]
         },
         {
-            "text": "So much text"
+            "id": 2,
+            "text": "Sorry to hear that",
+            "actions": [
+                {
+                    "text": "Goodbye",
+                    "nextNode": -1
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "text": "Yay! What would you like to talk about?",
+            "actions": [
+                {
+                    "text": "I changed my mind",
+                    "nextNode": 2
+                },
+                {
+                    "text": "Fish!",
+                    "nextNode": 4
+                },
+                {
+                    "text": "Ponies",
+                    "nextNode": 5
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "text": "I'm not really into fish",
+            "actions": [
+                {
+                    "text": "Oh... sorry",
+                    "nextNode": -1
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "text": "I love ponies! What's your favorite thing about them?",
+            "actions": [
+                {
+                    "text": "Their pretty manes",
+                    "nextNode": 6
+                },
+                {
+                    "text": "Their majestic horns",
+                    "nextNode": 7
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "text": "Wow, that's my favorite too!",
+            "actions": [
+                {
+                    "text": "Also, their majestic horns",
+                    "nextNode": 7
+                },
+                {
+                    "text": "Goodbye",
+                    "nextNode": -1
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "text": "Friend, that is a unicorn...",
+            "actions": []
         }
     ]
 }

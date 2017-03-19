@@ -1,0 +1,32 @@
+{
+    "dialogueNodes": [
+        {
+            "id": 0,
+            "text": "Who are you?",
+            "actions": [
+                {
+                    "text": "A friend",
+                    "requirement": 1,
+                    "modifier": 1,
+                    "nextNode": 1
+                },
+                {
+                    "text": "An enemy",
+                    "requirement": 0,
+                    "modifier": -1,
+                    "nextNode": 2
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "text": "Yay, a friend!",
+            "actions": []
+        },
+        {
+            "id": 2,
+            "text": "Go away",
+            "actions": []
+        }
+    ]
+}

@@ -12,6 +12,7 @@ public class GUIController : MonoBehaviour {
 	private bool active;
 	private float cooldown;
 	private string fullDialogue;
+	private NPCController target;
 
 	void Start() {
 		active = false;
@@ -32,13 +33,14 @@ public class GUIController : MonoBehaviour {
 
 	public bool isActive() { return active; }
 
-	public void StartDialogue(DialogueNode[] dialogue) {
-		dialogueManager.SetCurrentDialogue(dialogue);
+	public void StartDialogue(NPCController npc) {
+		this.target = npc;
+		dialogueManager.SetCurrentDialogue(npc.GetDialogue());
 
 		cooldown = 0.3f;
 		active = true;
 
-		SelectNode();
+		CreateText();
 	}
 
 	private void PerformAction() {
@@ -46,20 +48,34 @@ public class GUIController : MonoBehaviour {
 			if (fullDialogue != null) {
 				StopAllCoroutines();
 				visibleText[visibleText.Count - 1]
-					.GetComponentInChildren<Text>().text = fullDialogue;
+					.GetComponentInChildren<Text>()
+					.text = fullDialogue;
 				fullDialogue = null;
 				return;
 			}
-			fullDialogue = null;
-			DestroyText();
-
-			if (dialogueManager.SetNextNode() >= 0) {
-				SelectNode();
-			} else {
-				active = false;
-				DestroyText();
-			}
+			SelectNode();
 		}
+	}
+
+	private void EndConversation() { }
+
+	private void SelectNode() {
+		if (!dialogueManager.isAllowed(target.GetAffection())) return;
+
+		int consequence = dialogueManager.GetResult();
+		if (consequence != 0) {
+			target.UpdateAffection(consequence);
+		}
+
+		DestroyText();
+		if (dialogueManager.GetNextNode() < 0 || !dialogueManager.HasActions()) {
+			active = false;
+			target = null;
+			return;
+		}
+
+		dialogueManager.SelectNode();
+		CreateText();
 	}
 
 	private void MoveCursor() {
@@ -67,12 +83,16 @@ public class GUIController : MonoBehaviour {
 		visibleText[dialogueManager.MoveCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
 	}
 
-	private void SelectNode() {
+	private void CreateText() {
 		if (dialogueManager.HasActions()) {
 			int i = 1;
 			foreach (var action in dialogueManager.GetActions()) {
 				GameObject responseContainer = CreateTextContainer(responsePrefab, i);
-				responseContainer.GetComponentInChildren<Text>().text = action.text;
+				Text textComponent = responseContainer.GetComponentInChildren<Text>();
+				textComponent.text = action.text;
+				if (action.requirement > target.GetAffection()) {
+					textComponent.color = Color.gray;
+				}
 				i++;
 			}
 		}
@@ -131,6 +151,7 @@ public class GUIController : MonoBehaviour {
 				content.text = content.text + text.Substring(l, 1);
 				yield return new WaitForSeconds(0.05f);
 			}
+			fullDialogue = null;
 		}
 	}
 }

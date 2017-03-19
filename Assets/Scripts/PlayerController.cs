@@ -23,9 +23,9 @@ public class PlayerController : MonoBehaviour {
     }
 
 	public void OnTriggerStay(Collider other) {
-		if (!GuiController.isActive() && other.tag == "NPC" && Input.GetButtonDown("Fire1")) {
+		if (!GuiController.isActive() && other.CompareTag("NPC") && Input.GetButtonDown("Fire1")) {
 			NPCController npcController = other.GetComponent<NPCController>();
-			GuiController.StartDialogue(npcController.getDialogue());
+			GuiController.StartDialogue(npcController);
 		}
 	}
 }

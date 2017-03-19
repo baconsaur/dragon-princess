@@ -6,6 +6,8 @@
             "actions": [
                 {
                     "text": "Okay, bye!",
+                    "requirement": 0,
+                    "modifier": 0,
                     "nextNode": -1
                 }
             ]

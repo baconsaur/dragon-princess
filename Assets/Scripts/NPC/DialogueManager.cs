@@ -50,10 +50,24 @@ public class DialogueManager {
 		return -1;
 	}
 
-	public int SetNextNode() {
+	public void SelectNode() {
 		dialogueIndex = GetNextNode();
 		responseIndex = 0;
-		return dialogueIndex;
+	}
+
+	public int GetResult() {
+		if (currentDialogue[dialogueIndex].actions.Length == 0) return 0;
+
+		return currentDialogue[dialogueIndex]
+			.actions[responseIndex].modifier;
+	}
+
+	public bool isAllowed(int affection) {
+		if (currentDialogue[dialogueIndex].actions.Length == 0) return true;
+
+		return affection >= currentDialogue[dialogueIndex]
+			    .actions[responseIndex]
+			    .requirement;
 	}
 
 	public int GetCursor() { return responseIndex; }

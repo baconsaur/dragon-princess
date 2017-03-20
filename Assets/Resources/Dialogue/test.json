@@ -1,7 +1,6 @@
 {
     "dialogueNodes": [
         {
-            "id": 0,
             "text": "Hello, friend.",
             "actions": [
                 {
@@ -13,7 +12,6 @@
             ]
         },
         {
-            "id": 1,
             "text": "Would you like to have a conversation?",
             "actions": [
                 {
@@ -31,7 +29,6 @@
             ]
         },
         {
-            "id": 2,
             "text": "Sorry to hear that",
             "actions": [
                 {
@@ -43,7 +40,6 @@
             ]
         },
         {
-            "id": 3,
             "text": "Yay! What would you like to talk about?",
             "actions": [
                 {
@@ -67,7 +63,6 @@
             ]
         },
         {
-            "id": 4,
             "text": "I'm not really into fish",
             "actions": [
                 {
@@ -79,7 +74,6 @@
             ]
         },
         {
-            "id": 5,
             "text": "I love ponies! What's your favorite thing about them?",
             "actions": [
                 {
@@ -97,7 +91,6 @@
             ]
         },
         {
-            "id": 6,
             "text": "Wow, that's my favorite too!",
             "actions": [
                 {
@@ -115,7 +108,6 @@
             ]
         },
         {
-            "id": 7,
             "text": "Friend, that is a unicorn...",
             "actions": []
         }

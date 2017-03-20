@@ -9,13 +9,14 @@ GameObject:
   m_Component:
   - component: {fileID: 488848}
   - component: {fileID: 3306300}
-  - component: {fileID: 6574902}
   - component: {fileID: 2343872}
   - component: {fileID: 5478940}
   - component: {fileID: 11448328}
+  - component: {fileID: 136422358689051274}
+  - component: {fileID: 65255238774319760}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.85, y: 0.5, z: -0.56}
+  m_LocalPosition: {x: -4.24, y: 0.5, z: 4.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,18 +87,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6574902
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170094}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &11448328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94275063e406daf4093b7147088069fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  json: {fileID: 0}
+  dialogueSet: []
+  dialogueNodes: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -125,3 +115,28 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 170094}
   m_IsPrefabParent: 1
+--- !u!65 &65255238774319760
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136422358689051274
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.2802582
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

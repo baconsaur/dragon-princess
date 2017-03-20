@@ -1,7 +1,6 @@
 {
     "dialogueNodes": [
         {
-            "id": 0,
             "text": "Go away.",
             "actions": [
                 {

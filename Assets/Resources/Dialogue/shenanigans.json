@@ -1,0 +1,1 @@
+{"dialogueNodes":[{"text":"Hi!","actions":[{"text":"Butts","requirement":0,"modifier":1,"nextNode":1},{"text":"Taxes","requirement":0,"modifier":0,"nextNode":2}]},{"text":"YEAH BUTTS","actions":[]},{"text":"WOW FUCK OFF","actions":[]}]}

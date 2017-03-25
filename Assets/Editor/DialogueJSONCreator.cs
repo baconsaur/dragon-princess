@@ -38,8 +38,8 @@ public class DialogueJSONCreator : EditorWindow {
 
 	public void SaveDialogue() {
 		if (dialogueCollection == null) return;
-		string filePath = EditorUtility.OpenFilePanel(
-			"Save Dialogue File", Application.dataPath + dialoguePath, "json");
+		string filePath = EditorUtility.SaveFilePanel(
+			"Save Dialogue File", Application.dataPath + dialoguePath, "shenanigans", "json");
 
 		if (string.IsNullOrEmpty(filePath)) {
 			return;

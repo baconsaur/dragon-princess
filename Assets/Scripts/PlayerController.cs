@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     void Update() {
 	    if (GuiController.isActive()) return;
 
-	    Vector3 xDirection = Camera.main.transform.TransformDirection(Vector3.forward);
+	    Vector3 xDirection = Camera.main.transform.parent.TransformDirection(Vector3.forward);
 	    xDirection.y = 0;
 
         float z = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;

@@ -24,7 +24,7 @@ public class GUIController : MonoBehaviour {
 		cooldown -= Time.deltaTime;
 		if (cooldown > 0 || !active) return;
 
-		if (Input.anyKeyDown) {
+		if (Input.GetButton("Fire1") || Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) {
 			MoveCursor();
 			PerformAction();
 			cooldown = 0.3f;
@@ -149,7 +149,7 @@ public class GUIController : MonoBehaviour {
 			Text content = container.GetComponentInChildren<Text>();
 			for (int l = 0; l < text.Length; l += 1) {
 				content.text = content.text + text.Substring(l, 1);
-				yield return new WaitForSeconds(0.05f);
+				yield return new WaitForSeconds(0.04f);
 			}
 			fullDialogue = null;
 		}

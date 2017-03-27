@@ -534,12 +534,12 @@ Prefab:
     - target: {fileID: 114734092296767130, guid: 5cee73bcc563b467da5d379f0e9e24f9,
         type: 2}
       propertyPath: rotationSpeed
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114734092296767130, guid: 5cee73bcc563b467da5d379f0e9e24f9,
         type: 2}
       propertyPath: moveSpeed
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5cee73bcc563b467da5d379f0e9e24f9, type: 2}

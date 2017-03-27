@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 		target = GameObject.Find("Player Target");
 	}
 
-	void Update() {
+	void LateUpdate() {
 		if (GuiController.isActive()) return;
 
 		UpdatePlayer();
@@ -30,8 +30,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void UpdatePlayer() {
+		float inputMagnitude = Mathf.Max(
+			Mathf.Abs(Input.GetAxis("Vertical")),
+			Mathf.Abs(Input.GetAxis("Horizontal")));
+
 		bool shouldWalk = transform.position != target.transform.position;
-		bool shouldRun = Input.GetAxis("Vertical") > 0.7f;
+		bool shouldRun = inputMagnitude > 0.7f;
 
 		if (animator.GetBool("walking") != shouldWalk) {
 			animator.SetBool("walking", shouldWalk);

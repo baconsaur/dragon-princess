@@ -6,23 +6,34 @@ using UnityEngine.UI;
 public class GUIController : MonoBehaviour {
 	public GameObject dialoguePrefab;
 	public GameObject responsePrefab;
+	public GameObject notificationPrefab;
+
+	private InventoryController inventory;
 
 	private DialogueManager dialogueManager;
-	private List<GameObject> visibleText;
+	private List<GameObject> dialogueObjects;
+	private GameObject activeNotification;
 	private bool active;
 	private float cooldown;
-	private string fullDialogue;
 	private NPCController target;
 
 	void Start() {
+		inventory = GameObject.Find("Player").GetComponent<InventoryController>();
+
 		active = false;
-		visibleText = new List<GameObject>();
+		dialogueObjects = new List<GameObject>();
 		dialogueManager = new DialogueManager();
 	}
 
 	void Update() {
 		cooldown -= Time.deltaTime;
-		if (cooldown > 0 || !active) return;
+		if (cooldown > 0) return;
+		if (!active) {
+			if (activeNotification != null) {
+				PerformAction();
+			}
+			return;
+		}
 
 		if (Input.GetButton("Fire1") || Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) {
 			MoveCursor();
@@ -45,29 +56,39 @@ public class GUIController : MonoBehaviour {
 
 	private void PerformAction() {
 		if (Input.GetButtonDown("Fire1")) {
-			if (fullDialogue != null) {
-				StopAllCoroutines();
-				visibleText[visibleText.Count - 1]
-					.GetComponentInChildren<Text>()
-					.text = fullDialogue;
-				fullDialogue = null;
+			if (activeNotification != null) {
+				Destroy(activeNotification);
 				return;
 			}
+
+			StopAllCoroutines();
+			if (dialogueManager.StopScroll()) return;
+
 			SelectNode();
 		}
 	}
 
-	private void EndConversation() { }
-
 	private void SelectNode() {
 		if (!dialogueManager.isAllowed(target.GetAffection())) return;
 
-		int consequence = dialogueManager.GetResult();
-		if (consequence != 0) {
-			target.UpdateAffection(consequence);
+		DestroyText();
+
+		Reward reward = dialogueManager.GetReward();
+		if (reward != null) {
+			target.UpdateAffection(reward.affection);
+
+			if (reward.item.Count > 0) {
+				Item rewardItem = reward.item[0];
+				inventory.AddItem(rewardItem);
+
+				GameObject notificationContainer = CreateTextContainer(notificationPrefab, 0);
+				Text textComponent = notificationContainer.GetComponentInChildren<Text>();
+				textComponent.text = textComponent.text.Replace("[item]", rewardItem.name);
+
+				activeNotification = notificationContainer;
+			}
 		}
 
-		DestroyText();
 		if (dialogueManager.GetNextNode() < 0 || !dialogueManager.HasActions()) {
 			active = false;
 			target = null;
@@ -79,8 +100,8 @@ public class GUIController : MonoBehaviour {
 	}
 
 	private void MoveCursor() {
-		visibleText[dialogueManager.GetCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
-		visibleText[dialogueManager.MoveCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
+		dialogueObjects[dialogueManager.GetCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Normal;
+		dialogueObjects[dialogueManager.MoveCursor()].GetComponentInChildren<Text>().fontStyle = FontStyle.Bold;
 	}
 
 	private void CreateText() {
@@ -88,19 +109,23 @@ public class GUIController : MonoBehaviour {
 			int i = 1;
 			foreach (var action in dialogueManager.GetActions()) {
 				GameObject responseContainer = CreateTextContainer(responsePrefab, i);
+				dialogueObjects.Add(responseContainer);
+
 				Text textComponent = responseContainer.GetComponentInChildren<Text>();
 				textComponent.text = action.text;
-				if (action.requirement > target.GetAffection()) {
+				if (action.requirement.affection > target.GetAffection()) {
 					textComponent.color = Color.gray;
 				}
 				i++;
 			}
 		}
 
+		GameObject textContainer = CreateTextContainer(dialoguePrefab, 0);
+		dialogueObjects.Add(textContainer);
+
 		StartCoroutine(
-			ScrollText(
-				dialogueManager.GetText(),
-				CreateTextContainer(dialoguePrefab, 0)));
+			dialogueManager.ScrollText(
+				textContainer));
 
 		MoveCursor();
 	}
@@ -130,28 +155,13 @@ public class GUIController : MonoBehaviour {
 		textContainer.transform.Translate(prefab.transform.position);
 		textContainer.transform.SetParent(transform);
 
-		visibleText.Add(textContainer);
 		return textContainer;
 	}
 
 	private void DestroyText() {
-		StopAllCoroutines();
-
-		foreach (GameObject textObject in visibleText) {
+		foreach (GameObject textObject in dialogueObjects) {
 			Destroy(textObject);
 		}
-		visibleText = new List<GameObject>();
-	}
-
-	private IEnumerator ScrollText(string text, GameObject container) {
-		if (container != null) {
-			fullDialogue = text;
-			Text content = container.GetComponentInChildren<Text>();
-			for (int l = 0; l < text.Length; l += 1) {
-				content.text = content.text + text.Substring(l, 1);
-				yield return new WaitForSeconds(0.04f);
-			}
-			fullDialogue = null;
-		}
+		dialogueObjects = new List<GameObject>();
 	}
 }

@@ -1,9 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueManager {
 	private DialogueNode[] currentDialogue;
 	private int dialogueIndex;
 	private int responseIndex;
+	private string currentDialogueString;
+	private Text activeContainer;
 
 	public DialogueManager() { }
 
@@ -55,11 +60,11 @@ public class DialogueManager {
 		responseIndex = 0;
 	}
 
-	public int GetResult() {
-		if (currentDialogue[dialogueIndex].actions.Length == 0) return 0;
+	public Reward GetReward() {
+		if (currentDialogue[dialogueIndex].actions.Length == 0) return null;
 
 		return currentDialogue[dialogueIndex]
-			.actions[responseIndex].modifier;
+			.actions[responseIndex].reward;
 	}
 
 	public bool isAllowed(int affection) {
@@ -67,8 +72,31 @@ public class DialogueManager {
 
 		return affection >= currentDialogue[dialogueIndex]
 			    .actions[responseIndex]
-			    .requirement;
+			    .requirement.affection;
 	}
 
 	public int GetCursor() { return responseIndex; }
+
+	public bool StopScroll() {
+		if (currentDialogueString != null) {
+			activeContainer.text = currentDialogueString;
+			currentDialogueString = null;
+			return true;
+		}
+		return false;
+	}
+
+	public IEnumerator ScrollText(GameObject container) {
+		if (container != null) {
+			currentDialogueString = GetText();
+			Text content = container.GetComponentInChildren<Text>();
+			activeContainer = content;
+
+			for (int l = 0; l < currentDialogueString.Length; l += 1) {
+				content.text = content.text + currentDialogueString.Substring(l, 1);
+				yield return new WaitForSeconds(0.04f);
+			}
+			currentDialogueString = null;
+		}
+	}
 }

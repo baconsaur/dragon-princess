@@ -5,8 +5,12 @@
             "actions": [
                 {
                     "text": "Okay, bye!",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": {
+                        "affection": 0
+                    },
+                    "modifier": {
+                        "affection": 0
+                    },
                     "nextNode": -1
                 }
             ]

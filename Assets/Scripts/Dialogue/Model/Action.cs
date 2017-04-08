@@ -3,7 +3,7 @@
 [Serializable]
 public class Action {
 	public string text;
-	public int requirement;
-	public int modifier;
+	public Requirement requirement;
+	public Reward reward;
 	public int nextNode;
 }

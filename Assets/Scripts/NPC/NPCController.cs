@@ -4,25 +4,24 @@ using System.Collections;
 public class NPCController : MonoBehaviour {
 	public DialogueSet[] dialogueSet;
 	public DialogueNode[] dialogueNodes;
-	private NPCData npcDdata;
+	public NPCData npcData;
 	private int dialogueIndex;
 
 	public void Start() {
 		if (dialogueSet.Length > 0) {
 			SetDialogue(0);
 		}
-		npcDdata = new NPCData();
 	}
 
 	public void Update() { }
 
-	public int GetAffection() { return npcDdata.GetAffection(); }
+	public int GetAffection() { return npcData.affection; }
 
 	public void UpdateAffection(int change) {
-		npcDdata.UpdateAffection(change);
+		npcData.affection += change;
 
 		for (int i = dialogueSet.Length - 1; i > dialogueIndex; i--) {
-			if (npcDdata.GetAffection() >= dialogueSet[i].unlockLevel) {
+			if (npcData.affection >= dialogueSet[i].unlockLevel) {
 				SetDialogue(i);
 				break;
 			}

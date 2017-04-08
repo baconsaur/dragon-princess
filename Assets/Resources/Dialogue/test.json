@@ -5,8 +5,8 @@
             "actions": [
                 {
                     "text": "Hello",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 1
                 }
             ]
@@ -16,14 +16,14 @@
             "actions": [
                 {
                     "text": "Yes!",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 3
                 },
                 {
                     "text": "No, thanks",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 2
                 }
             ]
@@ -33,8 +33,8 @@
             "actions": [
                 {
                     "text": "Goodbye",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": -1
                 }
             ]
@@ -44,20 +44,20 @@
             "actions": [
                 {
                     "text": "I changed my mind",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 2
                 },
                 {
                     "text": "Fish!",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 4
                 },
                 {
                     "text": "Ponies",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 5
                 }
             ]
@@ -67,8 +67,8 @@
             "actions": [
                 {
                     "text": "Oh... sorry",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [{ "id": 0, "name": "Moldy Potato" }] },
                     "nextNode": -1
                 }
             ]
@@ -78,14 +78,14 @@
             "actions": [
                 {
                     "text": "Their pretty manes",
-                    "requirement": 0,
-                    "modifier": 1,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 1, "item": [] },
                     "nextNode": 6
                 },
                 {
                     "text": "Their majestic horns",
-                    "requirement": 3,
-                    "modifier": 0,
+                    "requirement": { "affection": 1, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 7
                 }
             ]
@@ -95,21 +95,17 @@
             "actions": [
                 {
                     "text": "Also, their majestic horns",
-                    "requirement": 3,
-                    "modifier": 0,
+                    "requirement": { "affection": 1, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": 7
                 },
                 {
                     "text": "Goodbye",
-                    "requirement": 0,
-                    "modifier": 0,
+                    "requirement": { "affection": 0, "item": [] },
+                    "reward": { "affection": 0, "item": [] },
                     "nextNode": -1
                 }
             ]
-        },
-        {
-            "text": "Friend, that is a unicorn...",
-            "actions": []
-        }
+        }, { "text": "Friend, that is a unicorn...", "actions": [] }
     ]
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 
 [Serializable]
-public class NPCData {
+public class Requirement {
 	public int affection;
+	public Item item;
 }

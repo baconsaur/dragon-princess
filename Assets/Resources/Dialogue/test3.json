@@ -5,14 +5,22 @@
             "actions": [
                 {
                     "text": "A friend",
-                    "requirement": 1,
-                    "modifier": 1,
+                    "requirement": {
+                        "affection": 0
+                    },
+                    "modifier": {
+                        "affection": 1
+                    },
                     "nextNode": 1
                 },
                 {
                     "text": "An enemy",
-                    "requirement": 0,
-                    "modifier": -1,
+                    "requirement": {
+                        "affection": 0
+                    },
+                    "modifier": {
+                        "affection": -1
+                    },
                     "nextNode": 2
                 }
             ]

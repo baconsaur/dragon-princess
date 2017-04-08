@@ -82,6 +82,8 @@ MonoBehaviour:
     type: 2}
   responsePrefab: {fileID: 1546544427125754, guid: e874979d025c556409347f5af87569d2,
     type: 2}
+  notificationPrefab: {fileID: 1320370394546426, guid: ee35533e6813f904e8fa848b6217136a,
+    type: 2}
 --- !u!223 &223022468657134408
 Canvas:
   m_ObjectHideFlags: 1

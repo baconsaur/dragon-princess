@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager {
+	private InventoryController inventory;
+
 	private DialogueNode[] currentDialogue;
 	private int dialogueIndex;
 	private int responseIndex;
 	private string currentDialogueString;
 	private Text activeContainer;
 
-	public DialogueManager() { }
+	public DialogueManager(InventoryController inventory) { this.inventory = inventory; }
 
 	public void SetCurrentDialogue(DialogueNode[] dialogue) {
 		currentDialogue = dialogue;
@@ -26,14 +28,10 @@ public class DialogueManager {
 
 	public int MoveCursor() {
 		if (currentDialogue[dialogueIndex].actions.Length > 0) {
-			if (Input.GetAxis("Horizontal") > 0) {
-				responseIndex += 1;
-			} else if (Input.GetAxis("Horizontal") < 0) {
-				responseIndex -= 1;
-			} else if (Input.GetAxis("Vertical") > 0) {
-				responseIndex -= 2;
+			if (Input.GetAxis("Vertical") > 0) {
+				responseIndex--;
 			} else if (Input.GetAxis("Vertical") < 0) {
-				responseIndex += 2;
+				responseIndex++;
 			}
 
 			int max = currentDialogue[dialogueIndex].actions.Length - 1 > 0
@@ -60,14 +58,26 @@ public class DialogueManager {
 		responseIndex = 0;
 	}
 
-	public Reward GetReward() {
+	public List<Item> GetReward(NPCController target) {
 		if (currentDialogue[dialogueIndex].actions.Length == 0) return null;
 
-		return currentDialogue[dialogueIndex]
-			.actions[responseIndex].reward;
+		Reward reward = currentDialogue[dialogueIndex]
+			.actions[responseIndex]
+			.reward;
+
+		if (reward != null && reward.affection > 0) {
+			target.UpdateAffection(reward.affection);
+		}
+		if (reward != null && reward.item.Count > 0) {
+			inventory.inventory.items.AddRange(reward.item);
+			return reward.item;
+		}
+
+		return null;
 	}
 
 	public bool isAllowed(int affection) {
+		if (GetNextNode() == -1) return false;
 		if (currentDialogue[dialogueIndex].actions.Length == 0) return true;
 
 		return affection >= currentDialogue[dialogueIndex]

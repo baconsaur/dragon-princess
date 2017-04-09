@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5461798}
   - component: {fileID: 95605560715585148}
   - component: {fileID: 114734092296767130}
+  - component: {fileID: 114652321092001476}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -130,7 +131,7 @@ GameObject:
   - component: {fileID: 4918413016745612}
   - component: {fileID: 136451857490965652}
   m_Layer: 0
-  m_Name: dragon_princess_generic
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -833,6 +834,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114652321092001476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f52c91b1e1df7143b85bee18efc2878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory:
+    items: []
 --- !u!114 &114734092296767130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -844,8 +858,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8e7c0e09a34744ebc85192be6518aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotationSpeed: 10
+  moveSpeed: 3.5
+  rotationSpeed: 5
 --- !u!136 &136451857490965652
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -78,12 +78,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c757f6f16e9224f57a660084da4e92f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialoguePrefab: {fileID: 1506303651635736, guid: 3586e920ef1552f4a8a0a14cb446c082,
-    type: 2}
-  responsePrefab: {fileID: 1546544427125754, guid: e874979d025c556409347f5af87569d2,
-    type: 2}
-  notificationPrefab: {fileID: 1320370394546426, guid: ee35533e6813f904e8fa848b6217136a,
-    type: 2}
+  prefabs:
+    dialoguePrefab: {fileID: 1506303651635736, guid: 3586e920ef1552f4a8a0a14cb446c082,
+      type: 2}
+    responsePrefab: {fileID: 1546544427125754, guid: e874979d025c556409347f5af87569d2,
+      type: 2}
+    notificationPrefab: {fileID: 1320370394546426, guid: ee35533e6813f904e8fa848b6217136a,
+      type: 2}
+    selectionColor: {r: 0.004000869, g: 0.5441177, b: 0.43236938, a: 0}
+    defaultColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!223 &223022468657134408
 Canvas:
   m_ObjectHideFlags: 1
